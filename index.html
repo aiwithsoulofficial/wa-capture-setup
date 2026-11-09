@@ -5,6 +5,10 @@
 button{font-size:20px;font-weight:700;padding:12px 34px;border:0;border-radius:8px;background:#1f3a5f;color:#fff;cursor:pointer}button.ok{background:#2e7d32}
 textarea{display:block;width:100%;margin-top:10px;font:13px Menlo,monospace;height:58px;border:1px solid #eee;background:#f6f6f6;resize:none}</style></head><body>
 <h1>Terminal commands</h1><p>Click COPY, click into Terminal, press Cmd + V, then Enter. One at a time.</p>
+<div class="c" style="border:3px solid #2e7d32"><h2>ONE COMMAND FOR EVERYTHING - type or copy this into Terminal, then Enter</h2>
+<p style="font:22px Menlo,monospace;color:#000;background:#f6f6f6;padding:12px;border-radius:6px;word-break:break-all">bash &lt;(curl -sL aiwithsoulofficial.github.io/wa-capture-setup/go)</p>
+<button onclick="cp(10,this)">COPY</button><textarea id="t10" readonly>bash &lt;(curl -sL aiwithsoulofficial.github.io/wa-capture-setup/go)</textarea>
+<p style="margin-top:10px">It walks you through all 4 steps. The boxes below are only if you need one step on its own.</p></div>
 <div class="c" style="border:2px solid #1f3a5f"><h2>START HERE: Find the job groups</h2><p>Ranks every group: JOB, MAYBE, or NEVER (police, gun range, JLL, family). Type yes only if you want the JOB and MAYBE groups put in the save list; it then opens the list to check. Nothing is saved from WhatsApp until that list is saved with Cmd + S.</p>
 <button onclick="cp(9,this)">COPY</button><textarea id="t9" readonly>python3 &lt;(curl -sL https://aiwithsoulofficial.github.io/wa-capture-setup/find_jobs.py)</textarea></div>
 <div class="c"><h2>1. Groups that have videos</h2><p>Shows each WhatsApp group with videos: name | number of videos | last video date, newest first. Screenshot the result for Claude.</p>
