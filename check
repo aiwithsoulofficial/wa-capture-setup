@@ -1,0 +1,23 @@
+#!/bin/bash
+# Status of the WhatsApp capture on this Mac. Run: bash <(curl -sL aiwithsoulofficial.github.io/wa-capture-setup/check)
+PL=~/Library/LaunchAgents/au.com.gillgroup.whatsapp-capture.plist
+echo
+if launchctl list | grep -q au.com.gillgroup.whatsapp-capture; then
+  echo "AUTO-SAVE: ON"
+else
+  echo "AUTO-SAVE: was off - switching it on..."
+  launchctl bootstrap gui/$(id -u) "$PL" 2>&1 || launchctl load "$PL" 2>&1
+  launchctl list | grep -q au.com.gillgroup.whatsapp-capture && echo "AUTO-SAVE: ON now" || echo "AUTO-SAVE: STILL OFF - tell Claude"
+fi
+L="$(ls ~/Library/CloudStorage/OneDrive*/WhatsApp-Jobs/"Groups to save.txt" 2>/dev/null | head -1)"
+echo
+if [ -n "$L" ]; then
+  echo "GROUPS IN THE SAVE LIST: $(grep -v '^#' "$L" | grep -c .)"
+  grep -v '^#' "$L" | grep . | head -40 | sed 's/^/   /'
+else
+  echo "GROUPS IN THE SAVE LIST: list not found"
+fi
+echo
+echo "LAST RUNS:"
+tail -6 ~/.gill-whatsapp/capture.log
+echo

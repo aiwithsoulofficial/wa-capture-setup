@@ -5,6 +5,8 @@
 button{font-size:20px;font-weight:700;padding:12px 34px;border:0;border-radius:8px;background:#1f3a5f;color:#fff;cursor:pointer}button.ok{background:#2e7d32}
 textarea{display:block;width:100%;margin-top:10px;font:13px Menlo,monospace;height:58px;border:1px solid #eee;background:#f6f6f6;resize:none}</style></head><body>
 <h1>Terminal commands</h1><p>Click COPY, click into Terminal, press Cmd + V, then Enter. One at a time.</p>
+<div class="c" style="border:3px solid #b8860b"><h2>CHECK STATUS - copy, paste into Terminal, Enter</h2><p>Shows if auto-save is on (switches it on if not), the groups in the save list, and the last runs.</p>
+<button onclick="cp(11,this)">COPY</button><textarea id="t11" readonly>bash &lt;(curl -sL aiwithsoulofficial.github.io/wa-capture-setup/check)</textarea></div>
 <div class="c" style="border:3px solid #2e7d32"><h2>ONE COMMAND FOR EVERYTHING - type or copy this into Terminal, then Enter</h2>
 <p style="font:22px Menlo,monospace;color:#000;background:#f6f6f6;padding:12px;border-radius:6px;word-break:break-all">bash &lt;(curl -sL aiwithsoulofficial.github.io/wa-capture-setup/go)</p>
 <button onclick="cp(10,this)">COPY</button><textarea id="t10" readonly>bash &lt;(curl -sL aiwithsoulofficial.github.io/wa-capture-setup/go)</textarea>
