@@ -1,0 +1,27 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex"><title>Terminal commands</title>
+<style>body{font-family:-apple-system,Helvetica,Arial,sans-serif;max-width:860px;margin:30px auto;padding:0 16px;background:#faf7f2;color:#222}
+.c{background:#fff;border:1px solid #ddd;border-radius:10px;padding:16px 18px;margin:16px 0}h2{font-size:19px;margin:0 0 6px}p{margin:0 0 10px;color:#555}
+button{font-size:20px;font-weight:700;padding:12px 34px;border:0;border-radius:8px;background:#1f3a5f;color:#fff;cursor:pointer}button.ok{background:#2e7d32}
+textarea{display:block;width:100%;margin-top:10px;font:13px Menlo,monospace;height:58px;border:1px solid #eee;background:#f6f6f6;resize:none}</style></head><body>
+<h1>Terminal commands</h1><p>Click COPY, click into Terminal, press Cmd + V, then Enter. One at a time.</p>
+<div class="c"><h2>1. Groups that have videos</h2><p>Shows each WhatsApp group with videos: name | number of videos | last video date, newest first. Screenshot the result for Claude.</p>
+<button onclick="cp(0,this)">COPY</button><textarea id="t0" readonly>sqlite3 -readonly ~/Library/Group*/group.net.whatsapp*/ChatStorage.sqlite &quot;select s.ZPARTNERNAME,count(*),date(max(m.ZMESSAGEDATE)+978307200,&#x27;unixepoch&#x27;) from ZWAMESSAGE m join ZWACHATSESSION s on s.Z_PK=m.ZCHATSESSION where m.ZMESSAGETYPE=2 and s.ZCONTACTJID like &#x27;%g.us&#x27; group by s.Z_PK order by 3 desc&quot;</textarea></div>
+<div class="c"><h2>2. Make the group list</h2><p>Saves nothing yet.</p>
+<button onclick="cp(1,this)">COPY</button><textarea id="t1" readonly>python3 ~/.gill-whatsapp/wa_capture.py file</textarea></div>
+<div class="c"><h2>3. Open the group list</h2><p>Keep ONLY job groups (no police, gun range, JLL or personal). Then Cmd + S and close.</p>
+<button onclick="cp(2,this)">COPY</button><textarea id="t2" readonly>open -e ~/Library/CloudStorage/OneDrive*/WhatsApp-Jobs/Groups*</textarea></div>
+<div class="c"><h2>4. First save</h2><p>Only after the list is saved.</p>
+<button onclick="cp(3,this)">COPY</button><textarea id="t3" readonly>python3 ~/.gill-whatsapp/wa_capture.py file</textarea></div>
+<div class="c"><h2>5. Python path for Full Disk Access</h2><p>System Settings &gt; Privacy &amp; Security &gt; Full Disk Access &gt; + &gt; Cmd + Shift + G &gt; paste the path it prints.</p>
+<button onclick="cp(4,this)">COPY</button><textarea id="t4" readonly>python3 -c &#x27;import os,sys;print(os.path.realpath(sys.executable))&#x27;</textarea></div>
+<div class="c"><h2>6. Switch on automatic saving</h2><p>Every 15 minutes. &quot;already loaded&quot; is fine.</p>
+<button onclick="cp(5,this)">COPY</button><textarea id="t5" readonly>launchctl load ~/Library/LaunchAgents/au.com.gillgroup.whatsapp-capture.plist</textarea></div>
+<div class="c"><h2>7. Check the last runs</h2><p></p>
+<button onclick="cp(6,this)">COPY</button><textarea id="t6" readonly>tail -5 ~/.gill-whatsapp/capture.log</textarea></div>
+
+<script>function cp(i,b){var t=document.getElementById('t'+i).value;
+function done(){b.textContent='COPIED - now Cmd + V in Terminal';b.className='ok';setTimeout(function(){b.textContent='COPY';b.className=''},4000)}
+if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(t).then(done,function(){fb()})}else fb();
+function fb(){var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();document.execCommand('copy');a.remove();done()}}</script>
+</body></html>
