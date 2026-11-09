@@ -1,0 +1,25 @@
+#!/bin/bash
+# Move folders that are not job groups OUT of WhatsApp-Jobs into ~/WhatsApp-not-jobs on this Mac. Deletes nothing.
+L="$(ls ~/Library/CloudStorage/OneDrive*/WhatsApp-Jobs/"Groups to save.txt" 2>/dev/null | head -1)"
+[ -z "$L" ] && echo "List not found - tell Claude" && exit 1
+python3 - "$L" <<'PY'
+import os, sys, shutil
+L = sys.argv[1]; out = os.path.dirname(L)
+sys.path.insert(0, os.path.expanduser("~/.gill-whatsapp"))
+import wa_capture as W
+keep = {W.clean(x) for x in W.read_list(L)}
+extra = sorted(d for d in os.listdir(out) if os.path.isdir(os.path.join(out, d)) and d not in keep)
+dest = os.path.expanduser("~/WhatsApp-not-jobs")
+os.makedirs(dest, exist_ok=True)
+moved = 0
+for d in extra:
+    t = os.path.join(dest, d)
+    if os.path.exists(t):
+        print("   already there, left in place: " + d); continue
+    shutil.move(os.path.join(out, d), t); moved += 1
+print("\nMoved %d folder(s) out of WhatsApp-Jobs into %s (on this Mac only, nothing deleted)." % (moved, dest))
+left = sorted(d for d in os.listdir(out) if os.path.isdir(os.path.join(out, d)))
+print("WhatsApp-Jobs now has %d job folder(s)." % len(left))
+PY
+echo
+echo "Now share it: Finder > OneDrive > right-click WhatsApp-Jobs > Share > add Kelly with edit access."
