@@ -5,6 +5,8 @@
 button{font-size:20px;font-weight:700;padding:12px 34px;border:0;border-radius:8px;background:#1f3a5f;color:#fff;cursor:pointer}button.ok{background:#2e7d32}
 textarea{display:block;width:100%;margin-top:10px;font:13px Menlo,monospace;height:58px;border:1px solid #eee;background:#f6f6f6;resize:none}</style></head><body>
 <h1>Terminal commands</h1><p>Click COPY, click into Terminal, press Cmd + V, then Enter. One at a time.</p>
+<div class="c" style="border:3px solid #6a1b9a"><h2>FINISH WITH ALL JOB + MAYBE GROUPS - copy, paste into Terminal, Enter</h2><p>Use after FIX said STOP. Keeps the list exactly as saved (up to 100 groups), does the first save, switches auto-save on, lists folders saved by mistake. Deletes nothing.</p>
+<button onclick="cp(13,this)">COPY</button><textarea id="t13" readonly>bash &lt;(curl -sL aiwithsoulofficial.github.io/wa-capture-setup/finish)</textarea></div>
 <div class="c" style="border:3px solid #c62828"><h2>FIX THE GROUP LIST - copy, paste into Terminal, Enter</h2><p>Stops auto-save, rebuilds the job-only list (type yes, check it, Cmd + S, Enter), restarts auto-save, lists folders saved by mistake. Deletes nothing.</p>
 <button onclick="cp(12,this)">COPY</button><textarea id="t12" readonly>bash &lt;(curl -sL aiwithsoulofficial.github.io/wa-capture-setup/fix)</textarea></div>
 <div class="c" style="border:3px solid #b8860b"><h2>CHECK STATUS - copy, paste into Terminal, Enter</h2><p>Shows if auto-save is on (switches it on if not), the groups in the save list, and the last runs.</p>

@@ -1,0 +1,30 @@
+#!/bin/bash
+# Finish: use the saved list as it is (up to 100 groups), first save, auto-save on, list wrongly saved folders. Deletes nothing.
+
+PL=~/Library/LaunchAgents/au.com.gillgroup.whatsapp-capture.plist
+osascript -e 'tell application "TextEdit" to quit' 2>/dev/null
+L="$(ls ~/Library/CloudStorage/OneDrive*/WhatsApp-Jobs/"Groups to save.txt" 2>/dev/null | head -1)"
+N=$(grep -v '^#' "$L" | grep -c .)
+echo
+echo "Groups in the list now: $N"
+if [ "$N" -gt 100 ]; then echo "STOP - that is still too many. Auto-save stays OFF. Tell Claude."; exit 1; fi
+echo
+echo "3. Saving the job groups and switching auto-save back on..."
+python3 ~/.gill-whatsapp/wa_capture.py file
+launchctl bootstrap gui/$(id -u) "$PL" 2>/dev/null || launchctl load "$PL" 2>/dev/null
+launchctl list | grep -q au.com.gillgroup.whatsapp-capture && echo "   AUTO-SAVE: ON" || echo "   AUTO-SAVE: OFF - tell Claude"
+echo
+echo "4. Folders in WhatsApp-Jobs that are NOT job groups (saved by mistake, NOT deleted - James decides):"
+python3 - "$L" <<'PY'
+import os, sys
+L = sys.argv[1]; out = os.path.dirname(L)
+sys.path.insert(0, os.path.expanduser("~/.gill-whatsapp"))
+import wa_capture as W
+keep = {W.clean(x) for x in W.read_list(L)}
+extra = sorted(d for d in os.listdir(out) if os.path.isdir(os.path.join(out, d)) and d not in keep)
+print("   %d folder(s):" % len(extra))
+for d in extra[:400]:
+    print("   - " + d)
+PY
+echo
+echo "DONE. Do NOT share WhatsApp-Jobs yet - tell Claude the numbers above first."
